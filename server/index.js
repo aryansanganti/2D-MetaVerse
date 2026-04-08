@@ -1,15 +1,9 @@
 const { WebSocketServer } = require('ws');
 const { v4: uuidv4 } = require('uuid');
-const { AccessToken } = require('livekit-server-sdk');
+const { AccessToken } = require('livekit-server-sdk'); // REMOVE LATER
 
 const PORT = 3001;
 
-// ─── LiveKit Configuration ────────────────────────────────────
-// Sign up at https://cloud.livekit.io (free tier)
-// Then paste your credentials here:
-const LIVEKIT_API_KEY = process.env.LIVEKIT_API_KEY || 'YOUR_API_KEY';
-const LIVEKIT_API_SECRET = process.env.LIVEKIT_API_SECRET || 'YOUR_API_SECRET';
-const LIVEKIT_URL = process.env.LIVEKIT_URL || 'wss://YOUR_PROJECT.livekit.cloud';
 const ROOM_NAME = 'zymesh-office'; // Single room for MVP
 
 const wss = new WebSocketServer({ port: PORT });
@@ -79,33 +73,7 @@ function sendToPlayer(playerId, data) {
 }
 
 console.log(`🟢 EchoGrid server running on ws://0.0.0.0:${PORT}`);
-if (LIVEKIT_API_KEY === 'YOUR_API_KEY') {
-  console.log(`⚠️  LiveKit not configured! Set LIVEKIT_API_KEY, LIVEKIT_API_SECRET, LIVEKIT_URL`);
-  console.log(`   Get free keys at: https://cloud.livekit.io`);
-} else {
-  console.log(`🎙️  LiveKit configured → ${LIVEKIT_URL}`);
-}
-
-// Generate a LiveKit access token for a player
-async function generateLiveKitToken(playerId, nickname) {
-  if (LIVEKIT_API_KEY === 'YOUR_API_KEY') {
-    return null; // Not configured
-  }
-
-  const token = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET, {
-    identity: playerId,
-    name: nickname,
-  });
-
-  token.addGrant({
-    room: ROOM_NAME,
-    roomJoin: true,
-    canPublish: true,
-    canSubscribe: true,
-  });
-
-  return await token.toJwt();
-}
+// LiveKit removed
 
 wss.on('connection', (ws) => {
   let playerId = null;
@@ -134,21 +102,11 @@ wss.on('connection', (ws) => {
         wsToPlayer.set(ws, playerId);
         playerToWs.set(playerId, ws);
 
-        // Generate LiveKit token
-        let livekitToken = null;
-        try {
-          livekitToken = await generateLiveKitToken(playerId, player.nickname);
-        } catch (err) {
-          console.error('LiveKit token error:', err.message);
-        }
-
-        // Send welcome with assigned ID + LiveKit token
+        // Send welcome with assigned ID
         ws.send(
           JSON.stringify({
             type: 'welcome',
             id: playerId,
-            livekitToken,
-            livekitUrl: LIVEKIT_API_KEY !== 'YOUR_API_KEY' ? LIVEKIT_URL : null,
             roomName: ROOM_NAME,
           })
         );

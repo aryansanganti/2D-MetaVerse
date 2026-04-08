@@ -30,8 +30,7 @@ export default function useWebSocket({
   >({});
   const [localId, setLocalId] = useState<string>('');
   const [connected, setConnected] = useState(false);
-  const [livekitToken, setLivekitToken] = useState<string | null>(null);
-  const [livekitUrl, setLivekitUrl] = useState<string | null>(null);
+
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const throttleRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSentRef = useRef<{ x: number; y: number; dir: string }>({
@@ -68,8 +67,7 @@ export default function useWebSocket({
           switch (data.type) {
             case 'welcome':
               setLocalId(data.id);
-              if (data.livekitToken) setLivekitToken(data.livekitToken);
-              if (data.livekitUrl) setLivekitUrl(data.livekitUrl);
+
               break;
 
             case 'state':
@@ -255,8 +253,7 @@ export default function useWebSocket({
     remotePlayers,
     localId,
     connected,
-    livekitToken,
-    livekitUrl,
+
     wsRef,
   };
 }

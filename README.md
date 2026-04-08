@@ -10,7 +10,7 @@ EchoGrid is an interactive virtual office and social space where users can walk 
 
 ### Key Features
 - **Real-Time Multiplayer:** Instant movement updates and avatar syncing powered by a custom Node.js WebSocket server.
-- **Proximity Voice & Text Chat:** Move close to other users to hear them talk via [LiveKit](https://livekit.io/) integration, or use the nearby text chat.
+- **Proximity Chat:** Move close to other users to use the nearby textual chat.
 - **Interactive Mini-games:** Challenge nearby coworkers to Math quizzes and Memory games!
 - **Customizable Avatars:** Choose from multiple unique characters.
 - **Cross-Platform:** Built with Expo, ready for iOS, Android, and Web.
@@ -30,7 +30,6 @@ npm install
 node index.js
 ```
 
-> **Note on Voice Chat:** For proximity voice chat to work, generate free API keys from [LiveKit Cloud](https://cloud.livekit.io/) and place them in `server/.env`. Make sure to copy `server/.env.sample` to `server/.env`.
 
 ### 2. Start the Frontend App
 The frontend is a React Native app managed by Expo.
@@ -53,5 +52,4 @@ Once started, you can:
 ## 🛠️ Built With
 - **Frontend**: React Native, Expo Router, Reanimated
 - **Backend**: Node.js, `ws` (WebSockets)
-- **Voice**: [LiveKit](https://livekit.io/) SDKs
 - **Styling**: Vanilla CSS-in-JS (StyleSheet)

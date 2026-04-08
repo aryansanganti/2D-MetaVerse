@@ -15,7 +15,7 @@ import Avatar from '@/components/Avatar';
 import ProximityIndicator from '@/components/ProximityIndicator';
 import useWebSocket from '@/hooks/useWebSocket';
 import useProximityAudio from '@/hooks/useProximityAudio';
-import useVoiceChat from '@/hooks/useVoiceChat';
+
 import ChatWindow from '@/components/ChatWindow';
 import ChallengeModal from '@/components/ChallengeModal';
 import MathQuiz from '@/components/games/MathQuiz';
@@ -71,8 +71,6 @@ export default function GameScreen() {
     remotePlayers,
     localId,
     connected,
-    livekitToken,
-    livekitUrl,
     wsRef,
   } = useWebSocket({
     serverUrl: SERVER_URL,
@@ -100,16 +98,6 @@ export default function GameScreen() {
       localY,
       remotePlayers,
       enabled: true,
-    });
-
-  // Voice chat (LiveKit)
-  const { isConnected: voiceConnected, isMuted, toggleMute, audioAvailable } =
-    useVoiceChat({
-      livekitToken,
-      livekitUrl,
-      nearbyUsers,
-      nearbyIds,
-      enabled: connected,
     });
 
   // Connect on mount
@@ -273,17 +261,6 @@ export default function GameScreen() {
           </View>
         )}
 
-        {/* Voice status */}
-        <View style={[
-          styles.voiceBadge,
-          { backgroundColor: voiceConnected ? 'rgba(46, 213, 115, 0.15)' : 'rgba(255, 165, 0, 0.15)' }
-        ]}>
-          {voiceConnected
-            ? <Ionicons name="volume-high" size={16} color="#2ed573" />
-            : audioAvailable
-              ? <Ionicons name="hourglass" size={16} color="#ffa502" />
-              : <MaterialCommunityIcons name="phone-off" size={16} color="#ffa502" />}
-        </View>
       </View>
 
       {/* Map + Avatars */}
@@ -335,19 +312,7 @@ export default function GameScreen() {
         onRelease={handleJoystickRelease}
       />
 
-      {/* Mute button (bottom-right) */}
-      <TouchableOpacity
-        style={[
-          styles.muteButton,
-          isMuted && styles.muteButtonActive,
-        ]}
-        onPress={toggleMute}
-        activeOpacity={0.7}
-      >
-        {isMuted
-          ? <Ionicons name="mic-off" size={26} color="#ff4757" />
-          : <Ionicons name="mic" size={26} color="#a855f7" />}
-      </TouchableOpacity>
+
 
       {/* Online count */}
       <View style={styles.onlineCounter}>
@@ -460,15 +425,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
   },
-  voiceBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 10,
-    marginLeft: 8,
-  },
-  voiceText: {
-    fontSize: 14,
-  },
+
   mapContainer: {
     flex: 1,
   },
@@ -476,27 +433,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  muteButton: {
-    position: 'absolute',
-    bottom: 60,
-    right: 24,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: 'rgba(20, 20, 50, 0.8)',
-    borderWidth: 2,
-    borderColor: 'rgba(108, 92, 231, 0.4)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 100,
-  },
-  muteButtonActive: {
-    backgroundColor: 'rgba(255, 71, 87, 0.3)',
-    borderColor: 'rgba(255, 71, 87, 0.5)',
-  },
-  muteEmoji: {
-    fontSize: 24,
-  },
+
   onlineCounter: {
     position: 'absolute',
     bottom: 130,
