@@ -1,50 +1,57 @@
-# Welcome to your Expo app 👋
+# 2D MetaVerse (EchoGrid)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome to **EchoGrid**, a spatial 2D MetaVerse built with React Native (Expo) and a custom Node.js WebSocket backend!
 
-## Get started
+![EchoGrid Environment](./assets/office_map.png)
 
-1. Install dependencies
+## What is this app?
 
-   ```bash
-   npm install
-   ```
+EchoGrid is an interactive virtual office and social space where users can walk around, chat, and play mini-games together in real-time. It features proximity-based interactions, meaning you only interact with players who are close to you on the map!
 
-2. Start the app
+### Key Features
+- **Real-Time Multiplayer:** Instant movement updates and avatar syncing powered by a custom Node.js WebSocket server.
+- **Proximity Voice & Text Chat:** Move close to other users to hear them talk via [LiveKit](https://livekit.io/) integration, or use the nearby text chat.
+- **Interactive Mini-games:** Challenge nearby coworkers to Math quizzes and Memory games!
+- **Customizable Avatars:** Choose from multiple unique characters.
+- **Cross-Platform:** Built with Expo, ready for iOS, Android, and Web.
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 🚀 Getting Started
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+To run this project locally, you need to start both the Node.js WebSocket server and the Expo frontend app.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 1. Start the Backend Server
+The server tracks player positions, handles chat, and manages game logic.
 
 ```bash
-npm run reset-project
+cd server
+npm install
+node index.js
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+> **Note on Voice Chat:** For proximity voice chat to work, generate free API keys from [LiveKit Cloud](https://cloud.livekit.io/) and place them in `server/.env`. Make sure to copy `server/.env.sample` to `server/.env`.
 
-## Learn more
+### 2. Start the Frontend App
+The frontend is a React Native app managed by Expo.
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+# Open a new terminal in the project root
+npm install
+npx expo start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Once started, you can:
+- **Scan the QR Code** with the *Expo Go* app on your physical device.
+- Press **`i`** to open the iOS Simulator.
+- Press **`a`** to open the Android Emulator.
 
-## Join the community
+*(If you are testing on a physical device, update the `SERVER_URL` in `app/game.tsx` to point to your computer's local Wi-Fi IP address instead of `localhost`.)*
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🛠️ Built With
+- **Frontend**: React Native, Expo Router, Reanimated
+- **Backend**: Node.js, `ws` (WebSockets)
+- **Voice**: [LiveKit](https://livekit.io/) SDKs
+- **Styling**: Vanilla CSS-in-JS (StyleSheet)
