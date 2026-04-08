@@ -1,15 +1,19 @@
 {
   "expo": {
-    "name": "zymesh",
-    "slug": "zymesh",
+    "name": "EchoGrid",
+    "slug": "echogrid",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "zymesh",
+    "scheme": "echogrid",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "ZyMesh needs microphone access for spatial voice chat with nearby players."
+      },
+      "bundleIdentifier": "com.aryansanganti.zymesh"
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +23,14 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "RECORD_AUDIO",
+        "MODIFY_AUDIO_SETTINGS",
+        "RECORD_AUDIO",
+        "MODIFY_AUDIO_SETTINGS"
+      ],
+      "package": "com.aryansanganti.zymesh"
     },
     "web": {
       "output": "static",
@@ -38,11 +49,29 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24
+          },
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "4d83705c-b7aa-453d-9223-7a95e42d53b9"
+      }
+    },
+    "owner": "aryansanganti"
   }
 }
